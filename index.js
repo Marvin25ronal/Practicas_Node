@@ -52,6 +52,37 @@ app.get('/factura', (req,res)=>{
   connection.end();
 });
 
+
+
+app.get('/factura2xd', (req,res)=>{
+  console.log("GET init");
+  connect();
+  connection.query("SELECT * FROM factura", function (err, result, fields) {
+    if (err) {
+      console.log("Error en el select", err);
+    }
+    res.send(result)
+  });
+  console.log("Conectado siuuu");
+  connection.end();
+});
+
+
+
+
+
+
+app.post('/email', (req,res)=>{
+ 
+
+    sendEmail("fernanpensa@gmail.com" , "algo");
+
+
+});
+
+
+
+
 app.get('/detalle_factura', (req,res)=>{
   console.log("GET init");
   connect();
@@ -116,3 +147,40 @@ function agregar_productos(detalle_factura, id_factura){
 app.listen(3000,()=>{
   console.log('funciona');
 });
+
+
+
+
+const nodemailer = require('nodemailer');
+
+function sendEmail(email, factura) {
+        console.log('enviando mail');
+        let transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+                user: 'cuenta.practicas.intermedias@gmail.com',
+                pass: 'practicas123' 
+            }
+        });
+
+        let mailOptions = {
+            from: 'Community USAC',
+            to: `${email}`,
+            subject: 'Factura xd',
+            //text: `La nota obtenida por ${name} fue de ${grade} puntos`
+
+
+            html: `<strong>no pos adios</strong>`
+        };
+
+
+        transporter.sendMail(mailOptions, function (err, info) {
+            if (err)
+            console.log(err)
+            else
+            console.log(info);
+        });
+    }
+
+    //En su correo electronico tendrian que desbloquer una funcion que no permite que terceros usen su servicio
+    //hay que descargar un modulo de npm que se llama nodemailer para que esto funcione
