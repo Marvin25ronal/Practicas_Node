@@ -2,10 +2,6 @@ const express=require('express')
 const app = express();
 const mysql = require('mysql');
 
-app.listen(3000,()=>{
-  console.log('funciona');
-});
-
 var connection;
 function connect() {
   connection = mysql.createConnection({
@@ -19,9 +15,16 @@ function connect() {
 
   connection.connect(function (err) {
     if (err) {
+      console.log("Error conectando BD");
       throw err;
     }else{
       console.log("connect siuuuu");
     }
   });
 }
+
+app.listen(3000,()=>{
+  console.log('funciona');
+});
+
+
