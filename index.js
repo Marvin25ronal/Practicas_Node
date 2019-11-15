@@ -9,19 +9,23 @@ function connect() {
     user     : 'admin',
     password : '12345678',
     database : 'bd_tienda_practicas',
-    port: 3306
   });
-  console.log("conectado")
-
-  connection.connect(function (err) {
-    if (err) {
-      console.log("Error conectando BD");
-      throw err;
-    }else{
-      console.log("connect siuuuu");
-    }
-  });
+  console.log("conectado a la BD")
 }
+
+app.get('/bd', (req,res)=>{
+    console.log("GET init");
+    connect();
+    connection.query("SELECT * FROM producto", function (err, result, fields) {
+      if (err) {
+        console.log("Error en el select", err);
+      }
+      res.send(result)
+    });
+    console.log("Conectado siuuu");
+    connection.end();
+});
+
 
 app.listen(3000,()=>{
   console.log('funciona');
